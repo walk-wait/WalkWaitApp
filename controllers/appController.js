@@ -44,36 +44,53 @@ module.exports = {
     let terminal = req.params.terminal
     let previous = req.params.previous
 
+  try {
+      // For bus time
+      let busData = await busTime(route, origin, destination, terminal, previous, res)
 
-    try {
-    // For bus time
-      let busData = await busTime(route, origin, destination, terminal, previous, res)      
-      
       // For latitude, longtitude data
-      let originCoord = await findLatlon(origin)
-      let destinationCoord = await findLatlon(destination)
-      
+        let originCoord = await findLatlon(origin)  
+        let destinationCoord = await findLatlon(destination)
+    
       // For walk time
-      let walkData = await walkTime(originCoord, destinationCoord)
-      
-      
+        let walkData = await walkTime(originCoord, destinationCoord)
+    
+    
       //Conditions array if/else for walk or wait determination
-      let conditionsObject = {
-        walkTimeCondition: walkData < 20, //walk if true 
-        busTimeCondition: busData.eta >= walkData, //walk if true
-        busBunchCondition: busData.bunch, // walk if true
-      }
+    
+        const walkTimeCondition = walkData < 20;
+        const busTimeCondition = busData.eta >= walkData;
+        const busBunchCondition = busData.bunch;
+        const noBusCondition = busData.noBus; ///999999
       
-      let walkOrWait = {
+    
+        const travelMode = getTravelMode(walkTimeCondition, busTimeCondition, busBunchCondition, noBusCondition) // returns string 'walk', 'wait', 'cab'
+    
+        let walkOrWait = {
         bus: busData,
         walk: walkData,
-        conditions: conditionsObject
+        travelMode: travelMode
       }
-      
-      res.json(walkOrWait)
-    } catch (error) {
-      res.json(error)
-    }
+    
+        // let conditionsObject = {
+        //    //walk if true add these lines to the right side =
+        //   busTimeCondition: busData.eta >= walkData, //walk if true
+        //   busBunchCondition:  busData.bunch, // walk if true
+        //   noBusCondition: busData.noBus //No bus
+        // }
+    
+        // let walkOrWait = {
+        //   bus: busData,
+        //   walk: walkData,
+        //   conditions: conditionsObject
+        // }
+    
+        console.log(walkOrWait)
+        res.json(walkOrWait)
+  } catch (error) {
+    res.json(error)
+  }
+
   },
 
 };
@@ -203,15 +220,15 @@ const busTime = async (route, origin, destination, terminal, previous, res) => {
       atDestinationTime = 999999
     }
   
-    //Returns times in minutes
-    let busTimeData = {
-      nextBus: atOriginTime,
-      eta: atDestinationTime,
-      bunch: bunch
-    }
+  //Returns times in minutes
+  let busTimeData = {
+    nextBus: atOriginTime,
+    eta: atDestinationTime,
+    bunch: bunch,
+    noBus: false
+  }
   
-    return busTimeData
-
+  return busTimeData
 
 }
 
@@ -252,6 +269,44 @@ const walkTime = async (originCoord, destinationCoord) => {
   return walkData
 }
 
+// separate helper function, accepts 4 conditions
+const getTravelMode = (a, b, c, d) => {
+
+            const bus1  =  a && !b && !c && !d
+            const bus2  = !a &&  b && !c && !d
+            const bus3  = !a && !b && !c && !d
+
+            const cab1  = !a &&  b &&  c &&  d
+            const cab2  = !a &&  b &&  c && !d
+            const cab3  = !a &&  b && !c &&  d
+            const cab4  = !a && !b &&  c &&  d
+            const cab5  = !a && !b &&  c && !d
+            const cab6  = !a && !b && !c &&  d
+
+            const walk1 =  a &&  b &&  c &&  d
+            const walk2 =  a &&  b &&  c && !d
+            const walk3 =  a &&  b && !c &&  d
+            const walk4 =  a && !b &&  c &&  d
+            const walk5 =  a &&  b && !c && !d
+            const walk6 =  a && !b &&  c && !d
+
+            const shouldBus = bus1 || bus2 || bus3
+            const shouldCab = cab1 || cab2 || cab3 || cab4 || cab5 || cab6
+            const shouldWalk = walk1 || walk2 || walk3 || walk4 || walk5 || walk6
+
+            let travelMode = '';
+
+            if (shouldBus) {
+              travelMode = 'wait'
+            } else if (shouldCab){
+              travelMode = 'cab'
+            } else if (shouldWalk) {
+              travelMode = 'walk'
+            }
+
+            return travelMode  // is a string
+      
+}
 //Add Algorithm here?
 // walkTime = walk time from google API
 // nextBus = time until the bus arrives at starting point

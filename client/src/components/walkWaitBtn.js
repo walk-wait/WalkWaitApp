@@ -1,34 +1,45 @@
 import React from 'react'
 
 class Result extends React.Component {
+
   render() {
-  //   console.log(this.props.busTimeCondition)
 
-  // console.log("*****");
-  // console.log(this.props.walkTimeCondition);
-  // console.log(this.props.busTimeCondition);
-  // console.log(this.props.busBunchCondition);
-  // console.log("*****");
+    let {travelMode} = this.props
+    console.log('travelMode', travelMode)
+    let heading = ""
+    let text = ""
 
-  let resultCondition1 = this.props.walkTimeCondition && this.props.busTimeCondition && this.props.busBunchCondition ? <h2>Walk</h2> : <h2>Wait</h2>
+    if (travelMode === 'walk') {
+        heading = 'walk'
+        text= 'Please walk.'
+    }else if (travelMode === 'cab') {
+        heading= 'cab'
+        text= 'Please take a cab.' 
+    }else if (travelMode === 'wait') {
+        heading= 'wait'
+        text= 'Please wait.' 
+    }
 
-  let result = this.props.result
-  
-  console.log("resultCondition1 = ", resultCondition1);
-  let resultCondition2 = this.props.busTimeCondition ?   <h2>Wait</h2> : <h2>&nbsp;</h2>
-  console.log(resultCondition2);
+      console.log (heading)
+      console.log (text)
 
-  let renderResult = <div> {resultCondition1} </div>
+
+  // let renderResult = <button className={this.state.heading}> <h2>{this.state.heading}</h2><p>{this.state.text}</p></button>
     return(
-      <div>
-      {result ? renderResult: <h2>&nbsp;</h2>}        
-      </div>
+       <div><button className={heading}><h2>{heading}</h2><p>{text}</p></button></div>
+        // <div><button onClick={
+        //   function (e) {
+        //     console.log (e.target.classList.add('nothing'))
+        //   }
+        // } className={heading}><h2>{heading}</h2><p>{text}</p></button></div>
     );
   }
 }
 
-export default Result;
+export default Result; 
 
+
+/* <button className="cab resultBtn"><a href="/home"><h2 className="cab">Take a Taxi</h2><p className="cab">No bus will arrive. {} to walk.</p><p className="cab">Please click anywhere on the page to return to the start.</p></a></button> */
 
 // //Manual binomial function for probability
 // function binomial(n, k) {
