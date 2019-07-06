@@ -31,19 +31,8 @@ class FixedNavbar extends React.Component {
             <MDBNavbarToggler onClick={this.onClick} />
             <MDBCollapse isOpen={this.state.collapse} navbar>
               <MDBNavbarNav left>
-<<<<<<< HEAD
-                <MDBNavItem active>
-                    <MDBNavLink to="/">Home</MDBNavLink>
-                </MDBNavItem>
-                <MDBNavItem>
-                    <MDBNavLink to="/about">About</MDBNavLink>
-                </MDBNavItem>
-                <MDBNavItem>
-                    <MDBNavLink to="#">Contact Us</MDBNavLink>
-=======
                 <MDBNavItem className={window.location.pathname === "/about" && "active"} onClick={this.toggleActive}>
                   <MDBNavLink to="/about" >About</MDBNavLink>
->>>>>>> master
                 </MDBNavItem>
               </MDBNavbarNav>
               <MDBNavbarNav right>
