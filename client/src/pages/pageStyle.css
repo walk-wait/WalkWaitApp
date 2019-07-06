@@ -1,4 +1,53 @@
 .mainContainer {
     min-height: calc(100vh - 229.5px);
+    position: relative;
     
 }
+
+.walk {
+    position: absolute;
+    background-color: green;
+    color: white;
+    height: 60%;
+    width: 100%;
+    left: 0;
+    top: 6%;
+    z-index: 1100;
+}
+
+.wait{
+    position: absolute;
+    background-color: red;
+    color: white;
+    height: 60%;
+    width: 100%;
+    left: 0;
+    top: 6%;
+    z-index: 1100;
+}
+
+.wait .nothing {
+    background-color: blue;
+}
+
+.cab {
+    position: absolute;
+    background-color: black;
+    color: white;
+    height: 60%;
+    width: 100%;
+    left: 0;
+    top: 6%;
+    z-index: 1100;
+}
+
+.resultBtn {
+    position: absolute;
+    background-color: red;
+    height: 60%;
+    width: 100%;
+    left: 0;
+    top: 6%;
+    z-index: 1100;
+}
+/* .wait::before */

@@ -32,7 +32,7 @@ class FixedNavbar extends React.Component {
                     <MDBNavLink to="/">Home</MDBNavLink>
                 </MDBNavItem>
                 <MDBNavItem>
-                    <MDBNavLink to="#">About</MDBNavLink>
+                    <MDBNavLink to="/about">About</MDBNavLink>
                 </MDBNavItem>
                 <MDBNavItem>
                     <MDBNavLink to="#">Contact Us</MDBNavLink>

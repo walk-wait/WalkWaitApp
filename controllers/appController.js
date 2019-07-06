@@ -56,18 +56,35 @@ module.exports = {
 
 
   //Conditions array if/else for walk or wait determination
-    let conditionsObject = {
-      walkTimeCondition: walkData < 20, //walk if true 
-      busTimeCondition: busData.eta >= walkData, //walk if true
-      busBunchCondition:  busData.bunch, // walk if true
-    }
+
+    const walkTimeCondition = walkData < 20;
+    const busTimeCondition = busData.eta >= walkData;
+    const busBunchCondition = busData.bunch;
+    const noBusCondition = busData.noBus; ///999999
+  
+
+    const travelMode = getTravelMode(walkTimeCondition, busTimeCondition, busBunchCondition, noBusCondition) // returns string 'walk', 'wait', 'cab'
 
     let walkOrWait = {
-      bus: busData,
-      walk: walkData,
-      conditions: conditionsObject
-    }
+    bus: busData,
+    walk: walkData,
+    travelMode: travelMode
+  }
 
+    // let conditionsObject = {
+    //    //walk if true add these lines to the right side =
+    //   busTimeCondition: busData.eta >= walkData, //walk if true
+    //   busBunchCondition:  busData.bunch, // walk if true
+    //   noBusCondition: busData.noBus //No bus
+    // }
+
+    // let walkOrWait = {
+    //   bus: busData,
+    //   walk: walkData,
+    //   conditions: conditionsObject
+    // }
+
+    console.log(walkOrWait)
     res.json(walkOrWait)
   },
 
@@ -176,7 +193,8 @@ console.log(route, origin, destination)
   let busTimeData = {
     nextBus: atOriginTime,
     eta: atDestinationTime,
-    bunch: bunch
+    bunch: bunch,
+    noBus: false
   }
 
   return busTimeData  
@@ -209,42 +227,41 @@ const walkTime = async (originCoord, destinationCoord) => {
   return walkTime
 }
 
-//Add Algorithm here?
-// walkTime = walk time from google API
-// nextBus = time until the bus arrives at starting point
-// eta = time the bus will arrive at destination. 
+// separate helper function, accepts 4 conditions
+const getTravelMode = (a, b, c, d) => {
 
-// Math.random();
-// var s = Math.floor(Math.random()*9)+1;
+            const bus1  =  a && !b && !c && !d
+            const bus2  = !a &&  b && !c && !d
+            const bus3  = !a && !b && !c && !d
 
-// var walkWaitTtc = eta * binomialProbability(10, s, 0.5) + eta;
+            const cab1  = !a &&  b &&  c &&  d
+            const cab2  = !a &&  b &&  c && !d
+            const cab3  = !a &&  b && !c &&  d
+            const cab4  = !a && !b &&  c &&  d
+            const cab5  = !a && !b &&  c && !d
+            const cab6  = !a && !b && !c &&  d
 
-// console.log(s + " at " + walkWaitTtc);
+            const walk1 =  a &&  b &&  c &&  d
+            const walk2 =  a &&  b &&  c && !d
+            const walk3 =  a &&  b && !c &&  d
+            const walk4 =  a && !b &&  c &&  d
+            const walk5 =  a &&  b && !c && !d
+            const walk6 =  a && !b &&  c && !d
 
-// var walkWaitDecisionWeekDayAm = eta*binomialProbability(10, 7, 0.9)+eta;
-// walkWaitDecisionWeekDayAm;
+            const shouldBus = bus1 || bus2 || bus3
+            const shouldCab = cab1 || cab2 || cab3 || cab4 || cab5 || cab6
+            const shouldWalk = walk1 || walk2 || walk3 || walk4 || walk5 || walk6
 
-// var walkWaitDecisionWeekDayPM = eta*binomialProbability(10, 6, 0.9)+eta;
-// walkWaitDecisionWeekDayPM;
+            let travelMode = '';
 
-// var walkWaitDecisionWeekDayEve = eta*binomialProbability(10, 8, 0.9)+eta;
-// walkWaitDecisionWeekDayEve;
+            if (shouldBus) {
+              travelMode = 'wait'
+            } else if (shouldCab){
+              travelMode = 'cab'
+            } else if (shouldWalk) {
+              travelMode = 'walk'
+            }
 
-// var s = math.random()*10;
-
-// var walkWaitDecisionOther = eta*binomialProbability(10, s, 0.5)+eta;
-
-// walkWaitDecisionOther;
-
-
-// function binomialProbability(n, k) {
-//   var n = 2;
-//   var k = 1;
-//   if ((typeof n !== 'number') || (typeof k !== 'number')) 
-// return false; 
-//  var coeff = 1;
-//  for (var x = n-k+1; x <= n; x++) coeff *= x;
-//  for (x = 1; x <= k; x++) coeff /= x;
-//  return coeff;
-// }
-// console.log(coeff);
+            return travelMode  // is a string
+      
+}

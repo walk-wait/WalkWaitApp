@@ -20,7 +20,8 @@ class Main extends React.Component {
       walkTimeCondition: false,
       busTimeCondition: false,
       busBunchCondition: false,// assign to value and then change based on user request
-      receivedResult: false
+      receivedResult: false,
+      travelMode: null
     };
   }
 
@@ -29,7 +30,7 @@ class Main extends React.Component {
     e.preventDefault()
     let geoOptions = {
        enableHighAccuracy: true,
-       timeout: 5000,
+      //  timeout: 5000,
        maximumAge: 0
     };
 
@@ -128,16 +129,18 @@ class Main extends React.Component {
     API.search(route, origin, destination, terminal, previous)
       .then(res => {
         this.setState({ 
-          walkTimeCondition: res.data.conditions.walkTimeCondition,
-          busTimeCondition: res.data.conditions.busTimeCondition,
-          busBunchCondition: res.data.conditions.busBunchCondition,
-          receivedResult: true
+          // walkTimeCondition: res.data.conditions.walkTimeCondition,
+          // busTimeCondition: res.data.conditions.busTimeCondition,
+          // busBunchCondition: res.data.conditions.busBunchCondition,
+          receivedResult: true,
+          travelMode: res.data.travelMode
          })
         console.log(res.data)
       })
   }
 
   render() {
+    console.log(this.state.travelMode)
     return(
       <MDBContainer className="text-center mt-5 pt-5 mainContainer">
         <form>
@@ -164,13 +167,15 @@ class Main extends React.Component {
                 <p style={{margin: "0"}}>Next bus: </p>
               </MDBCol>
           </MDBRow>
-
-          <WalkButtonWaitButton 
-            walkTimeCondition={this.state.walkTimeCondition}
-            busTimeCondition={this.state.busTimeCondition}
-            busBunchCondition={this.state.busBunchCondition}
+            {this.state.receivedResult ?
+          (<WalkButtonWaitButton
+          className='test'
             result={this.state.receivedResult}
-          />
+            travelMode={this.state.travelMode}
+          />) : null  
+        }
+
+
 
       </MDBContainer>
     );

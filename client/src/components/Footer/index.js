@@ -12,10 +12,10 @@ const FooterPage = () => {
           <MDBCol md="3" sm="12">
             <ul>
               <li className="list-unstyled">
-                <a href="#!">Home</a>
+                <a href="/">Home</a>
               </li>
               <li className="list-unstyled">
-                <a href="#!">About</a>
+                <a href="/about">About</a>
               </li>
               <li className="list-unstyled">
                 <a href="#!">Contact Us</a>

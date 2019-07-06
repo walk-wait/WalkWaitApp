@@ -5,6 +5,7 @@ import Nav from './components/Nav'
 import Footer from './components/Footer'
 import Main from './pages/Main'
 import Admin from './pages/Admin'
+import AboutPage from './pages/About'
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
         <Nav />
           <Switch>
             <Route exact path="/" component={Main}/>
-            <Route exact path="/admin" component={Admin}/>       
+            <Route exact path="/admin" component={Admin}/> 
+            <Route exact path="/about" component={AboutPage}></Route>      
           </Switch>
         <Footer />
       </div>
