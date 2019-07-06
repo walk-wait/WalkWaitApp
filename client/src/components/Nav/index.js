@@ -1,33 +1,37 @@
 import React from 'react';
-import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBCollapse, MDBNavItem, MDBNavLink, MDBIcon } from 'mdbreact';
+import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBDropdown, MDBDropdownMenu, MDBDropdownToggle, MDBCollapse, MDBNavItem, MDBDropdownItem, MDBNavLink, MDBIcon } from 'mdbreact';
 
 class FixedNavbar extends React.Component {
   constructor(props) {
-      super(props);
-      this.state = {
-          collapse: false,
-      };
-      this.onClick = this.onClick.bind(this);
+    super(props);
+    this.state = {
+      collapse: false,
+    };
+    this.onClick = this.onClick.bind(this);
   }
 
   onClick() {
     this.setState({
-        collapse: !this.state.collapse,
-      });
+      collapse: !this.state.collapse,
+    });
+  }
+
+  toggleActive = (e) => {
+    this.forceUpdate()
   }
 
   render() {
-    const bgPink = {backgroundColor: '#e91e63'}
-    return(
+    return (
       <div>
         <header>
-          <MDBNavbar style={bgPink} dark expand="md" scrolling fixed="top">
-            <MDBNavbarBrand href="/">
-                <strong>Walk/Wait</strong>
+          <MDBNavbar style={{ backgroundColor: "#212121" }} dark expand="md" scrolling fixed="top">
+            <MDBNavbarBrand href="/" style={{ color: "#ffea00" }} onClick={this.toggleActive}>
+              <strong>Walk/Wait</strong>
             </MDBNavbarBrand>
-            <MDBNavbarToggler onClick={ this.onClick } />
-            <MDBCollapse isOpen = { this.state.collapse } navbar>
+            <MDBNavbarToggler onClick={this.onClick} />
+            <MDBCollapse isOpen={this.state.collapse} navbar>
               <MDBNavbarNav left>
+<<<<<<< HEAD
                 <MDBNavItem active>
                     <MDBNavLink to="/">Home</MDBNavLink>
                 </MDBNavItem>
@@ -36,11 +40,25 @@ class FixedNavbar extends React.Component {
                 </MDBNavItem>
                 <MDBNavItem>
                     <MDBNavLink to="#">Contact Us</MDBNavLink>
+=======
+                <MDBNavItem className={window.location.pathname === "/about" && "active"} onClick={this.toggleActive}>
+                  <MDBNavLink to="/about" >About</MDBNavLink>
+>>>>>>> master
                 </MDBNavItem>
               </MDBNavbarNav>
               <MDBNavbarNav right>
-                <MDBNavItem>                  
-                  <MDBNavLink to="#"><MDBIcon icon="mobile-alt" /></MDBNavLink>
+                <MDBNavItem>
+                  <MDBDropdown>
+                    <MDBDropdownToggle nav caret>
+                      <MDBIcon icon="user-alt" />
+                    </MDBDropdownToggle>
+
+                    <MDBDropdownMenu className="dropdown-default">
+                      <MDBDropdownItem to="#!"> My account </MDBDropdownItem>
+                      <MDBDropdownItem to="#!"> Log out </MDBDropdownItem>
+                      <MDBDropdownItem to="#!"> Register </MDBDropdownItem>
+                    </MDBDropdownMenu>
+                  </MDBDropdown>
                 </MDBNavItem>
               </MDBNavbarNav>
             </MDBCollapse>
