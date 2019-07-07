@@ -154,7 +154,15 @@ class Main extends React.Component {
     } else {
       return(
         <MDBContainer className="text-center mt-5 pt-5 mainContainer">
-          <form style={{maxWidth: "400px"}} className="mx-auto">
+
+          {this.state.receivedResult ?
+          (<WalkButtonWaitButton
+          className='test'
+            result={this.state.receivedResult}
+            travelMode={this.state.travelMode}
+            onClick={this.handleClickForDisplay}
+          />) : 
+          (<form style={{maxWidth: "400px"}} className="mx-auto">
             <MDBRow className="row justify-content-center">
                 <MDBCol sm="12" className="mb-4">
                     <Start departOptions={this.state.departOptions} geolocate={this.geolocate} latitude={this.state.latitude} longitude={this.state.longitude} handleChange={this.handleDepartInput}/>
@@ -166,14 +174,7 @@ class Main extends React.Component {
                   <MDBBtn color="yellow accent-3" size="sm" onClick={(e) => this.handleSubmit(e)}>Submit</MDBBtn>
                 </MDBCol>
             </MDBRow>
-          </form>
-          {this.state.receivedResult ?
-          (<WalkButtonWaitButton
-          className='test'
-            result={this.state.receivedResult}
-            travelMode={this.state.travelMode}
-            onClick={this.handleClickForDisplay}
-          />) : null  
+          </form>)
         }
         </MDBContainer>
       );
