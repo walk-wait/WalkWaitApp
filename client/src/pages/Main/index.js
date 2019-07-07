@@ -17,9 +17,6 @@ class Main extends React.Component {
       arrivalOptions: [],
       depart: {},
       arrival: {},
-      walkTimeCondition: false,
-      busTimeCondition: false,
-      busBunchCondition: false,// assign to value and then change based on user request
       receivedResult: false,
       travelMode: null,
       error: null
@@ -128,9 +125,6 @@ class Main extends React.Component {
     API.search(route, origin, destination, terminal, previous)
       .then(res => {
         this.setState({ 
-          // walkTimeCondition: res.data.conditions.walkTimeCondition,
-          // busTimeCondition: res.data.conditions.busTimeCondition,
-          // busBunchCondition: res.data.conditions.busBunchCondition,
           receivedResult: true,
           travelMode: res.data.travelMode
          })
@@ -139,6 +133,11 @@ class Main extends React.Component {
       .catch(error => {
         this.setState({error})
       })
+  }
+
+  handleClickForDisplay = (e) => {
+    e.preventDefault()
+    this.setState({receivedResult: false})
   }
 
   render() {
@@ -173,6 +172,7 @@ class Main extends React.Component {
           className='test'
             result={this.state.receivedResult}
             travelMode={this.state.travelMode}
+            onClick={this.handleClickForDisplay}
           />) : null  
         }
         </MDBContainer>
