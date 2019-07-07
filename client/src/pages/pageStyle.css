@@ -7,8 +7,9 @@
 .walk {
     position: absolute;
     background-color: green;
+    margin: 0px;
     color: white;
-    height: 60%;
+    height: 90%;
     width: 100%;
     left: 0;
     top: 6%;
@@ -17,37 +18,25 @@
 
 .wait{
     position: absolute;
-    background-color: red;
+    background-color: #AA0114;
+    margin: 0px;
     color: white;
-    height: 60%;
+    height: 90%;
     width: 100%;
     left: 0;
     top: 6%;
     z-index: 1100;
-}
-
-.wait .nothing {
-    background-color: blue;
 }
 
 .cab {
     position: absolute;
-    background-color: black;
-    color: white;
-    height: 60%;
+    background-color: #ffea00;
+    margin: 0px;
+    color: #212121;
+    height: 90%;
     width: 100%;
     left: 0;
-    top: 6%;
+    top: 0%;
     z-index: 1100;
 }
 
-.resultBtn {
-    position: absolute;
-    background-color: red;
-    height: 60%;
-    width: 100%;
-    left: 0;
-    top: 6%;
-    z-index: 1100;
-}
-/* .wait::before */
