@@ -26,7 +26,7 @@ class Result extends React.Component {
 
   // let renderResult = <button className={this.state.heading}> <h2>{this.state.heading}</h2><p>{this.state.text}</p></button>
     return(
-       <div><button className={heading}><h2>{heading}</h2><p>{text}</p></button></div>
+       <div><button className={heading} onClick={(e)=>{this.props.onClick(e)}}><h2>{heading}</h2><p>{text}</p></button></div>
         // <div><button onClick={
         //   function (e) {
         //     console.log (e.target.classList.add('nothing'))
