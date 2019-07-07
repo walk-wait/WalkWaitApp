@@ -11,13 +11,13 @@ class Result extends React.Component {
 
     if (travelMode === 'walk') {
         heading = 'walk'
-        text= 'Please walk.'
+        text= 'Based on our math you will get there faster'
     }else if (travelMode === 'cab') {
         heading= 'cab'
-        text= 'Please take a cab.' 
+        text= 'For various reasons including a bus may not be coming at all you should call a cab. If you want to walk still it will take you {} minutes' 
     }else if (travelMode === 'wait') {
         heading= 'wait'
-        text= 'Please wait.' 
+        text= 'Please wait our math shows you will arrive faster then walking if you use the TTC.' 
     }
 
       console.log (heading)
