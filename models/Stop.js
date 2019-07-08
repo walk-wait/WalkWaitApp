@@ -1,4 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
+    
     var Stop = sequelize.define("Stop", {
         tag: {
             type: DataTypes.STRING,
@@ -28,4 +29,3 @@ module.exports = function (sequelize, DataTypes) {
 
     return Stop
 }
-

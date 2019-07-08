@@ -7,12 +7,13 @@ const path = require("path");
 app.post("/api/arrival", function(req, res) {
 
 	const arrivalData = req.body;
-	
 	let geolocationQuery;
+	
 	geolocationQuery = `https://geocoder.api.here.com/6.2/geocode.json?app_id=${process.env.APP_ID}&app_code=${process.env.APP_CODE}&searchtext=`;
 	geolocationQuery += encodeURIComponent(arrivalData.address + ', Toronto, Canada');
 
 	console.log(geolocationQuery);
+
 	// make GET request to geolocater API to get lattitude and longitude
 	axios.get(geolocationQuery).then(response => {
 
@@ -46,10 +47,7 @@ app.post("/api/arrival", function(req, res) {
 	});
 });
 
-
-
 //Google walk data
-
     app.post("/search", (req, res) => {
         // let walkTime = ;
         axios.get(

@@ -55,35 +55,24 @@ module.exports = {
       // For walk time
       let walkData = await walkTime(originCoord, destinationCoord)
 
+      // Math.random();
+      // let s = Math.floor(Math.random()*9)+1;
+      // let busData.eta = eta * binomialProbability(10, s, 0.5) + eta;
+      // console.log(s + " at " + walkWaitTtc);
 
       //Conditions array if/else for walk or wait determination
-
       const walkTimeCondition = walkData < 20;
       const busTimeCondition = busData.eta >= walkData;
       const busBunchCondition = busData.bunch;
       const noBusCondition = busData.noBus; ///999999
-
-
-      const travelMode = getTravelMode(walkTimeCondition, busTimeCondition, busBunchCondition, noBusCondition) // returns string 'walk', 'wait', 'cab'
+      // returns string 'walk', 'wait', 'cab'
+      const travelMode = getTravelMode(walkTimeCondition, busTimeCondition, busBunchCondition, noBusCondition)
 
       let walkOrWait = {
         bus: busData,
         walk: walkData,
         travelMode: travelMode
       }
-
-      // let conditionsObject = {
-      //    //walk if true add these lines to the right side =
-      //   busTimeCondition: busData.eta >= walkData, //walk if true
-      //   busBunchCondition:  busData.bunch, // walk if true
-      //   noBusCondition: busData.noBus //No bus
-      // }
-
-      // let walkOrWait = {
-      //   bus: busData,
-      //   walk: walkData,
-      //   conditions: conditionsObject
-      // }
 
       console.log(walkOrWait)
       res.json(walkOrWait)
@@ -112,7 +101,6 @@ const busTime = async (route, origin, destination, terminal, previous, res) => {
     return error
   }
 
-
   //Set variables
   let atOriginTime
   let nextVehicleId
@@ -120,7 +108,6 @@ const busTime = async (route, origin, destination, terminal, previous, res) => {
   let destinationBusValues
   let atDestinationTime
   let bunch = false
-
 
   // If/Else statement depending on how many data point returns
   if (busTimes.data.length === 2) {
@@ -269,7 +256,7 @@ const walkTime = async (originCoord, destinationCoord) => {
   return walkData
 }
 
-// separate helper function, accepts 4 conditions
+// Decesion helper function, accepts 4 conditions
 const getTravelMode = (a, b, c, d) => {
 
   const bus1 = a && !b && !c && !d
@@ -307,17 +294,8 @@ const getTravelMode = (a, b, c, d) => {
   return travelMode // is a string
 
 }
-//Add Algorithm here?
-// walkTime = walk time from google API
-// nextBus = time until the bus arrives at starting point
-// eta = time the bus will arrive at destination. 
 
-// Math.random();
-// var s = Math.floor(Math.random()*9)+1;
-
-// var walkWaitTtc = eta * binomialProbability(10, s, 0.5) + eta;
-
-// console.log(s + " at " + walkWaitTtc);
+//Add Algorithm here helper functions here
 
 // var walkWaitDecisionWeekDayAm = eta*binomialProbability(10, 7, 0.9)+eta;
 // walkWaitDecisionWeekDayAm;
@@ -327,13 +305,6 @@ const getTravelMode = (a, b, c, d) => {
 
 // var walkWaitDecisionWeekDayEve = eta*binomialProbability(10, 8, 0.9)+eta;
 // walkWaitDecisionWeekDayEve;
-
-// var s = math.random()*10;
-
-// var walkWaitDecisionOther = eta*binomialProbability(10, s, 0.5)+eta;
-
-// walkWaitDecisionOther;
-
 
 // function binomialProbability(n, k) {
 //   var n = 2;
@@ -346,3 +317,61 @@ const getTravelMode = (a, b, c, d) => {
 //  return coeff;
 // }
 // console.log(coeff);
+
+// //Time Day Logic Tables for maginal math probability 
+// const a = {
+//   'mon': { 
+//    0: { trials: 3, sucess: 1}, //8am-9am
+//    1: { trials: 2, sucess: 1}, //12pm-1pm
+//    2: { trials: 3, sucess: 2}, //4pm-5pm
+//    4: { trials: 1, sucess: 0} //all other hours
+//    },
+//   'tues': {
+//     0: { trials: 3, sucess: 1}, //8am-9pm
+//     1: { trials: 2, sucess: 1}, //12pm-1pm
+//     2: { trials: 3, sucess: 2}, //4pm-5pm
+//     4: { trials: 1, sucess: 0} //all other hours
+//   },
+//   'wed': {
+//     0: { trials: 3, sucess: 1}, //8am-9pm
+//     1: { trials: 2, sucess: 1}, //12pm-1pm
+//     2: { trials: 3, sucess: 2}, //4pm-5pm
+//     4: { trials: 1, sucess: 0} //all other hours
+//   },
+//   'thurs': {
+//     0: { trials: 3, sucess: 1}, //8am-9pm
+//     1: { trials: 2, sucess: 1}, //12pm-1pm
+//     2: { trials: 3, sucess: 2}, //4pm-5pm
+//     4: { trials: 1, sucess: 0} //all other hours
+//   },
+//   'fri': {
+//     0: { trials: 3, sucess: 1}, //8am-9pm
+//     1: { trials: 2, sucess: 1}, //12pm-1pm
+//     2: { trials: 3, sucess: 2}, //4pm-5pm
+//     4: { trials: 1, sucess: 0} //all other hours
+//   },
+//   'weekend': {
+//     0: { trials: 3, sucess: 1}, //8am-9pm
+//     1: { trials: 2, sucess: 1}, //12pm-1pm
+//     2: { trials: 3, sucess: 2}, //4pm-5pm
+//     4: { trials: 1, sucess: 0} //all other hours
+//   }
+//  }
+// //Call list for table
+//  const time = '5:00'; //called from the API
+//  const day = 'mon'; //called from the API
+//  const x = a[day][time].trials //NewDate() built in function to JS or use moment.js 
+//  const y = a[day][time].success
+
+//  binomial(x, y)
+//________________________________________________________________________________________________________________
+//Binomial Runkit NPM Instructions
+//  const binomialProbability = require('binomial-probability')
+
+ // What is the probability of x successes in n trials?
+//  binomialProbability(trials, successes, probability_of_success)
+ 
+ // What is the probability of x or fewer successes in n trials?
+//  binomialProbability.cumulative(trials, successes, probability_of_success)
+
+//  var binomialProbability = require("binomial-probability");
