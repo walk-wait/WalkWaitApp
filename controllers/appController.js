@@ -2,6 +2,7 @@ require("dotenv").config();
 const db = require("../models");
 const axios = require("axios");
 const binomialProbability = require("binomial-probability");
+const moment = require("moment")
 
 // Defining methods for the appController
 module.exports = {
@@ -55,11 +56,31 @@ module.exports = {
       // For walk time
       let walkData = await walkTime(originCoord, destinationCoord)
 
+      //Moment.js to capture the current day and time.
+      let rightNow = moment().format(('h' + 'a'));
+      console.log (rightNow)
+
+      //Rush hour probability bionomial
+      Math.random();
+      let rushHour = 0;
+      let rhp = Math.floor(Math.random()*9)+1;
+      console.log('rhp'+ rhp)
+      if (rightNow === '9am' || rightNow === '1pm' || rightNow === '5pm' || rightNow === '6pm' || rightNow === '7pm') {
+      rushHour = Math.round(rhp * binomialProbability(10, rhp, 0.5) + Math.floor(Math.random())+1 + rushHour)
+      console.log('rush hour' + rushHour)
+      console.log('rhp'+ rhp)
+      } else {
+        rushHour = rushHour;
+      }
+
       console.log(busData.eta + 'before')
+      console.log('rushHour' + rushHour)
+      console.log(busData.eta + 'middle')
+
       //bionomial
       Math.random();
       let s = Math.floor(Math.random()*9)+1;
-      busData.eta = Math.round(busData.eta * binomialProbability(10, s, 0.5) + busData.eta);
+      busData.eta = Math.round(busData.eta * binomialProbability(10, s, 0.5) + busData.eta) + rushHour;
       console.log(busData.eta + 'after')
 
       //Conditions array if/else for walk or wait determination
@@ -297,83 +318,14 @@ const getTravelMode = (a, b, c, d) => {
 
 }
 
-//Add Algorithm here helper functions here
-
-// var walkWaitDecisionWeekDayAm = eta*binomialProbability(10, 7, 0.9)+eta;
-// walkWaitDecisionWeekDayAm;
-
-// var walkWaitDecisionWeekDayPM = eta*binomialProbability(10, 6, 0.9)+eta;
-// walkWaitDecisionWeekDayPM;
-
-// var walkWaitDecisionWeekDayEve = eta*binomialProbability(10, 8, 0.9)+eta;
-// walkWaitDecisionWeekDayEve;
-
-// function binomialProbability(n, k) {
-//   var n = 2;
-//   var k = 1;
-//   if ((typeof n !== 'number') || (typeof k !== 'number')) 
-// return false; 
-//  var coeff = 1;
-//  for (var x = n-k+1; x <= n; x++) coeff *= x;
-//  for (x = 1; x <= k; x++) coeff /= x;
-//  return coeff;
-// }
-// console.log(coeff);
-
-// //Time Day Logic Tables for maginal math probability 
-// const a = {
-//   'mon': { 
-//    0: { trials: 3, sucess: 1}, //8am-9am
-//    1: { trials: 2, sucess: 1}, //12pm-1pm
-//    2: { trials: 3, sucess: 2}, //4pm-5pm
-//    4: { trials: 1, sucess: 0} //all other hours
-//    },
-//   'tues': {
-//     0: { trials: 3, sucess: 1}, //8am-9pm
-//     1: { trials: 2, sucess: 1}, //12pm-1pm
-//     2: { trials: 3, sucess: 2}, //4pm-5pm
-//     4: { trials: 1, sucess: 0} //all other hours
-//   },
-//   'wed': {
-//     0: { trials: 3, sucess: 1}, //8am-9pm
-//     1: { trials: 2, sucess: 1}, //12pm-1pm
-//     2: { trials: 3, sucess: 2}, //4pm-5pm
-//     4: { trials: 1, sucess: 0} //all other hours
-//   },
-//   'thurs': {
-//     0: { trials: 3, sucess: 1}, //8am-9pm
-//     1: { trials: 2, sucess: 1}, //12pm-1pm
-//     2: { trials: 3, sucess: 2}, //4pm-5pm
-//     4: { trials: 1, sucess: 0} //all other hours
-//   },
-//   'fri': {
-//     0: { trials: 3, sucess: 1}, //8am-9pm
-//     1: { trials: 2, sucess: 1}, //12pm-1pm
-//     2: { trials: 3, sucess: 2}, //4pm-5pm
-//     4: { trials: 1, sucess: 0} //all other hours
-//   },
-//   'weekend': {
-//     0: { trials: 3, sucess: 1}, //8am-9pm
-//     1: { trials: 2, sucess: 1}, //12pm-1pm
-//     2: { trials: 3, sucess: 2}, //4pm-5pm
-//     4: { trials: 1, sucess: 0} //all other hours
-//   }
-//  }
-// //Call list for table
-//  const time = '5:00'; //called from the API
-//  const day = 'mon'; //called from the API
-//  const x = a[day][time].trials //NewDate() built in function to JS or use moment.js 
-//  const y = a[day][time].success
-
-//  binomial(x, y)
-//________________________________________________________________________________________________________________
-//Binomial Runkit NPM Instructions
-//  const binomialProbability = require('binomial-probability')
-
- // What is the probability of x successes in n trials?
-//  binomialProbability(trials, successes, probability_of_success)
- 
- // What is the probability of x or fewer successes in n trials?
-//  binomialProbability.cumulative(trials, successes, probability_of_success)
-
-//  var binomialProbability = require("binomial-probability");
+// s variable coefficiant used by binomial for rush hour
+function coeff(n, k) {
+  const n = 2;
+  const k = 1;
+  if ((typeof n !== 'number') || (typeof k !== 'number')) 
+return false; 
+ let coeff = 1;
+ for (let x = n-k+1; x <= n; x++) coeff *= x;
+ for (x = 1; x <= k; x++) coeff /= x;
+ return coeff;
+}
