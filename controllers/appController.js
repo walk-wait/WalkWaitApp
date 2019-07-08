@@ -1,7 +1,7 @@
 require("dotenv").config();
 const db = require("../models");
 const axios = require("axios");
-// const binomialProbability = require("binomial-probability");
+const binomialProbability = require("binomial-probability");
 
 // Defining methods for the appController
 module.exports = {
@@ -55,16 +55,18 @@ module.exports = {
       // For walk time
       let walkData = await walkTime(originCoord, destinationCoord)
 
-      // Math.random();
-      // let s = Math.floor(Math.random()*9)+1;
-      // let busData.eta = eta * binomialProbability(10, s, 0.5) + eta;
-      // console.log(s + " at " + walkWaitTtc);
+      console.log(busData.eta + 'before')
+      //bionomial
+      Math.random();
+      let s = Math.floor(Math.random()*9)+1;
+      busData.eta = Math.round(busData.eta * binomialProbability(10, s, 0.5) + busData.eta);
+      console.log(busData.eta + 'after')
 
       //Conditions array if/else for walk or wait determination
       const walkTimeCondition = walkData < 20;
       const busTimeCondition = busData.eta >= walkData;
       const busBunchCondition = busData.bunch;
-      const noBusCondition = busData.noBus; ///999999
+      const noBusCondition = busData.eta === 999999 || busData.nextBus === 999999
       // returns string 'walk', 'wait', 'cab'
       const travelMode = getTravelMode(walkTimeCondition, busTimeCondition, busBunchCondition, noBusCondition)
 
