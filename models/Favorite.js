@@ -1,4 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
+    
     var Favorite = sequelize.define("Favorite", {
         depart_id: {
             type: DataTypes.INTEGER,

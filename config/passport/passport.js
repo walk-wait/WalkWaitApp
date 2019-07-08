@@ -48,3 +48,4 @@ passport.use(new LocalStrategy(
   //
   // Exporting our configured passport
   module.exports = passport;
+  

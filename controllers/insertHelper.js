@@ -114,14 +114,3 @@ function insertStop(routeNormal, routeShort) {
 }
 
 console.log(insertStop(routeNormal,routeShort))
-
-
-// my thought: 
-// first step: find the route that in the short route but not
-// in the regular route (complete)
-
-
-// mark the indexes and index - 1
-
-
-// insert
