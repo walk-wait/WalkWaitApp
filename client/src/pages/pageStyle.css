@@ -6,6 +6,7 @@
 .walk {
     position: absolute;
     background-color: rgb(27, 99, 58);
+    border: rgb(27, 99, 58);
     font-size: x-large;
     margin: 0px;
     color: white;
@@ -20,6 +21,7 @@
     position: absolute;
     /* border-radius: 50%; */
     background-color: #AA0114;
+    border: #AA0114;
     margin: 0px;
     color: white;
     font-size: x-large;
@@ -35,13 +37,14 @@
 .cab {
     position: absolute;
     background-color: #ffea00;
+    border:  #ffea00;
     font-size: x-large;
     margin: 0px;
     color: #212121;
     height: 90%;
     width: 100%;
     left: 0;
-    top: 0%;
+    top: 6%;
     z-index: 1100;
 }
 
