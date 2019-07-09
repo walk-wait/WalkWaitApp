@@ -115,8 +115,8 @@ class Signin extends React.Component {
                   <MDBBtn color="yellow accent-3" onClick={(e)=>{this.loginUser(e)}}>Login</MDBBtn>
                 </div>
               </form>
-              <br></br>
-              <p className="text-center">Don't have an account? <a style={{color: "#ffea00"}} href="/signup">Sign up here.</a></p>
+              {/* <br></br>
+              <p className="text-center">Don't have an account? <a style={{color: "#ffea00"}} href="/signup">Sign up here.</a></p> */}
             </MDBCol>
           </MDBRow>
         </MDBContainer>
