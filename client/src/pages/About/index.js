@@ -32,11 +32,16 @@ const AboutPage = () => {
             an app we have all become quite passionate about.
             </p>
             <br></br>
-            <h2>Sharon Chien</h2>
-            <p>About Sharon</p>
+            <h2>Sharon Chien</h2> 
+            <p>Financial consultant with a Master of Biotech turned web developer. Currently playing super mom by day and coder at night while on mat-leave. 
+            Powered by truck-loads of delicious food (carbo-loading for late night coding sessions) and a splash of caffeine. Always looking for a good coding challenge and to work with fun loving individuals on cool projects.
+            “Food is life and code is LOVE!”  - Sharon
+            </p>
             <br></br>
             <h2>Paul Xu</h2>
-            <p>About Paul</p>
+            <p>Working as a Junior Softwarement Engineer/IT Consultant after graduting from University of Waterloo with a Bechlor of Mathematics/Computing Option in December 2018 and recently from the University of Toronto.
+            Paul is passionate about coding when joined with data science. He is proud that Walk or Wait was able to inigrate both of his passions of web development and data modeling analysis. He is excited about his next journey 
+            of working towards a Master of Analytics in Georgia Tech starting at 2019.</p>
             <br></br>
             <h2>Quang Chieu Nguyen</h2>
             <p>Currently working with the non-profit VWAT Family Services. Quang while passionate about helping others is seeking out new challeges in web developoment
