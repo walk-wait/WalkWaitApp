@@ -107,12 +107,12 @@ class Signin extends React.Component {
                     <p className="white-text text-center">
                     That username or password isn&apos;t recognized. Please try again or register now. 
                     </p>
-                    <MDBBtn href="/signup" size="sm" color="yellow accent-3">Register</MDBBtn>
+                    <MDBBtn href="/signup" size="sm" color="yellow accent-3" className="black-text">Register</MDBBtn>
                   </div>
 
                 )}
                 <div className="text-center">
-                  <MDBBtn color="yellow accent-3" onClick={(e)=>{this.loginUser(e)}}>Login</MDBBtn>
+                  <MDBBtn color="yellow accent-3" className="black-text" onClick={(e)=>{this.loginUser(e)}}>Login</MDBBtn>
                 </div>
               </form>
               {/* <br></br>
@@ -122,7 +122,7 @@ class Signin extends React.Component {
         </MDBContainer>
       );
     }
-    return <Redirect to={`/admin/${this.state.email}`} />
+    return <Redirect to={`/admin`} />
   }
 };
 

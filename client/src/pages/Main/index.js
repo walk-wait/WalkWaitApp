@@ -149,7 +149,7 @@ class Main extends React.Component {
         <MDBContainer className="text-center mt-5 pt-5 mainContainer">
             <MDBRow className="justify-content-center">
                 <MDBCol md="5" sm="12">
-                  <MDBBtn href="/" color="yellow accent-3">TTC is unable provide bus info at this time.<br />Click here to try again.</MDBBtn>
+                  <MDBBtn href="/" color="yellow accent-3" className="black-text">TTC is unable provide bus info at this time.<br />Click here to try again.</MDBBtn>
                 </MDBCol>
             </MDBRow>
         </MDBContainer>
