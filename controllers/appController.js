@@ -167,7 +167,7 @@ const busTime = async (route, origin, destination, terminal, previous, res) => {
         atDestinationTime = atOriginTime + lastBusTime + (lastBusTime - secondLastBusTime)
 
         // Bus probably bunched if there are 4 or more buses scheduled to arrive at destination and none of which is the next bus to start at origin
-        if (busTimes.data[0].values.length > 4) {
+        if (busTimes.data[0].values.length > 4 && index === -1) {
           console.log("if there are 4 or more buses at destination")
           bunch = true
         }
@@ -232,7 +232,7 @@ const busTime = async (route, origin, destination, terminal, previous, res) => {
 
   //Returns times in minutes
   let busTimeData = {
-    nextBus: atOriginTime,
+    nextBus: atOriginTime, //change to 999999
     eta: atDestinationTime,
     bunch: bunch,
     noBus: false
