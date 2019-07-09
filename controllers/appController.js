@@ -1,7 +1,8 @@
 require("dotenv").config();
 const db = require("../models");
 const axios = require("axios");
-// const binomialProbability = require("binomial-probability");
+const binomialProbability = require("binomial-probability");
+const moment = require("moment")
 
 // Defining methods for the appController
 module.exports = {
@@ -55,35 +56,46 @@ module.exports = {
       // For walk time
       let walkData = await walkTime(originCoord, destinationCoord)
 
+      //Moment.js to capture the current day and time.
+      let rightNow = moment().format(('h' + 'a'));
+      console.log (rightNow)
+
+      //Rush hour probability bionomial
+      Math.random();
+      let rushHour = 0;
+      let rhp = Math.floor(Math.random()*9)+1;
+      console.log('rhp'+ rhp)
+      if (rightNow === '9am' || rightNow === '1pm' || rightNow === '5pm' || rightNow === '6pm' || rightNow === '7pm') {
+      rushHour = Math.round(rhp * binomialProbability(10, rhp, 0.5) + Math.floor(Math.random())+1 + rushHour)
+      console.log('rush hour' + rushHour)
+      console.log('rhp'+ rhp)
+      } else {
+        rushHour = rushHour;
+      }
+
+      console.log(busData.eta + 'before')
+      console.log('rushHour' + rushHour)
+      console.log(busData.eta + 'middle')
+
+      //bionomial
+      Math.random();
+      let s = Math.floor(Math.random()*9)+1;
+      busData.eta = Math.round(busData.eta * binomialProbability(10, s, 0.5) + busData.eta) + rushHour;
+      console.log(busData.eta + 'after')
 
       //Conditions array if/else for walk or wait determination
-
       const walkTimeCondition = walkData < 20;
       const busTimeCondition = busData.eta >= walkData;
       const busBunchCondition = busData.bunch;
-      const noBusCondition = busData.noBus; ///999999
-
-
-      const travelMode = getTravelMode(walkTimeCondition, busTimeCondition, busBunchCondition, noBusCondition) // returns string 'walk', 'wait', 'cab'
+      const noBusCondition = busData.eta === 999999 || busData.nextBus === 999999
+      // returns string 'walk', 'wait', 'cab'
+      const travelMode = getTravelMode(walkTimeCondition, busTimeCondition, busBunchCondition, noBusCondition)
 
       let walkOrWait = {
         bus: busData,
         walk: walkData,
         travelMode: travelMode
       }
-
-      // let conditionsObject = {
-      //    //walk if true add these lines to the right side =
-      //   busTimeCondition: busData.eta >= walkData, //walk if true
-      //   busBunchCondition:  busData.bunch, // walk if true
-      //   noBusCondition: busData.noBus //No bus
-      // }
-
-      // let walkOrWait = {
-      //   bus: busData,
-      //   walk: walkData,
-      //   conditions: conditionsObject
-      // }
 
       console.log(walkOrWait)
       res.json(walkOrWait)
@@ -112,7 +124,6 @@ const busTime = async (route, origin, destination, terminal, previous, res) => {
     return error
   }
 
-
   //Set variables
   let atOriginTime
   let nextVehicleId
@@ -120,7 +131,6 @@ const busTime = async (route, origin, destination, terminal, previous, res) => {
   let destinationBusValues
   let atDestinationTime
   let bunch = false
-
 
   // If/Else statement depending on how many data point returns
   if (busTimes.data.length === 2) {
@@ -269,7 +279,7 @@ const walkTime = async (originCoord, destinationCoord) => {
   return walkData
 }
 
-// separate helper function, accepts 4 conditions
+// Decesion helper function, accepts 4 conditions
 const getTravelMode = (a, b, c, d) => {
 
   const bus1 = a && !b && !c && !d
@@ -307,42 +317,15 @@ const getTravelMode = (a, b, c, d) => {
   return travelMode // is a string
 
 }
-//Add Algorithm here?
-// walkTime = walk time from google API
-// nextBus = time until the bus arrives at starting point
-// eta = time the bus will arrive at destination. 
 
-// Math.random();
-// var s = Math.floor(Math.random()*9)+1;
-
-// var walkWaitTtc = eta * binomialProbability(10, s, 0.5) + eta;
-
-// console.log(s + " at " + walkWaitTtc);
-
-// var walkWaitDecisionWeekDayAm = eta*binomialProbability(10, 7, 0.9)+eta;
-// walkWaitDecisionWeekDayAm;
-
-// var walkWaitDecisionWeekDayPM = eta*binomialProbability(10, 6, 0.9)+eta;
-// walkWaitDecisionWeekDayPM;
-
-// var walkWaitDecisionWeekDayEve = eta*binomialProbability(10, 8, 0.9)+eta;
-// walkWaitDecisionWeekDayEve;
-
-// var s = math.random()*10;
-
-// var walkWaitDecisionOther = eta*binomialProbability(10, s, 0.5)+eta;
-
-// walkWaitDecisionOther;
-
-
-// function binomialProbability(n, k) {
-//   var n = 2;
-//   var k = 1;
-//   if ((typeof n !== 'number') || (typeof k !== 'number')) 
-// return false; 
-//  var coeff = 1;
-//  for (var x = n-k+1; x <= n; x++) coeff *= x;
-//  for (x = 1; x <= k; x++) coeff /= x;
-//  return coeff;
-// }
-// console.log(coeff);
+// s variable coefficiant used by binomial for rush hour
+function coeff(n, k) {
+  const n = 2;
+  const k = 1;
+  if ((typeof n !== 'number') || (typeof k !== 'number')) 
+return false; 
+ let coeff = 1;
+ for (let x = n-k+1; x <= n; x++) coeff *= x;
+ for (x = 1; x <= k; x++) coeff /= x;
+ return coeff;
+}
