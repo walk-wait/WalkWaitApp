@@ -11,8 +11,9 @@ module.exports = {
             }
             if(info !== undefined){
                 console.log(info.message)
-                res.send(info.message)
+                res.send({message: info.message})
             } else {
+                console.log(`authController user ${user}`)
                 req.logIn(user, err => {
                     const data = {
                         email: req.body.email
@@ -23,10 +24,10 @@ module.exports = {
                         }
                     }).then(user => {
                         user.update({
-                            email: data.emal
+                            email: data.email
                         }).then(()=> {
                             console.log('User created in db.')
-                            res.status(200).send({messge: 'user created'})
+                            res.status(200).send({message: `${req.body.email} is created as an admin.`})
                         })
                     })
                 })
@@ -80,8 +81,8 @@ module.exports = {
                 console.log('User found in db from route')
                 res.status(200).send({
                     auth: true,
+                    id: user.id,
                     email: user.email,
-                    password: user.password,
                     message: 'User found in db.'
                 })
             }

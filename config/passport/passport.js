@@ -28,15 +28,17 @@ passport.use(
             console.log('You have already registered with this Email.')
             return done(null, false, {message: 'Already registered using this email.'})
           } else {
+            console.log(`passport user 1 ${user}`)
             bcrypt.hash(password, BCRYPT_SALT_ROUNDS)
             .then(hashedPassword => {
               db.User.create({
                 email: email,
                 password: hashedPassword
               })
-            }).then(user => {
-              console.log('user created')
-              return done(null, user)
+              .then(user => {
+                console.log('user created')
+                return done(null, user)
+              })
             })
           }
         })
@@ -96,7 +98,7 @@ passport.use(
     try {
       db.User.findOne({
         where: {
-          email: jwt_payload.id
+          email: jwt_payload.email
         }
       }).then(user => {
         if (user){

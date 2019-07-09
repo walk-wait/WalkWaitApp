@@ -3,7 +3,7 @@ import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBInput} from 'mdbreact';
 import API from '../../utils/AdminAPI'
 import '../pageStyle.css'
 import axios from 'axios';
-import base64 from 'base-64'
+import Alert from '../../components/Alert'
 
 class Admin extends React.Component {
     constructor(props) {
@@ -13,9 +13,11 @@ class Admin extends React.Component {
         error: true,
         email: '',
         password: '',
-        loggedIn: false,
-        showError: false,
-        showNullError: false,
+        loggedIn: true,
+        showError: true,
+        showNullError: true,
+        registerError: true,
+        messageFromServer: '',
       };
     }
 
@@ -117,6 +119,8 @@ class Admin extends React.Component {
               password,
             },
           );
+          console.log(response.data)
+          alert(response.data.message)
           this.setState({
             messageFromServer: response.data.message,
             showError: false,
@@ -124,8 +128,9 @@ class Admin extends React.Component {
             registerError: false,
           });
         } catch (error) {
-          console.error(error.response.data);
+          console.log(error);
           if (error.response.data === 'username or email already taken') {
+            alert(error.response.data)
             this.setState({
               showError: true,
               loginError: true,
