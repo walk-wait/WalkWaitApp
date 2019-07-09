@@ -5,7 +5,11 @@
   "proxy": "http://localhost:3001/",
   "dependencies": {
     "base-64": "^0.1.0",
+    "cors": "^2.8.5",
+    "jsonwebtoken": "^8.5.1",
     "mdbreact": "^4.16.0",
+    "morgan": "^1.9.1",
+    "passport-jwt": "^4.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
