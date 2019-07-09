@@ -275,7 +275,6 @@ const walkTime = async (originCoord, destinationCoord) => {
   } else {
     walkData = parseInt(walkTimeData[0])
   }
-
   return walkData
 }
 

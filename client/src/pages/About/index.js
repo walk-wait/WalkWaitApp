@@ -35,7 +35,6 @@ const AboutPage = () => {
             <h2>Sharon Chien</h2> 
             <p>Financial consultant with a Master of Biotech turned web developer. Currently playing super mom by day and coder at night while on mat-leave. 
             Powered by truck-loads of delicious food (carbo-loading for late night coding sessions) and a splash of caffeine. Always looking for a good coding challenge and to work with fun loving individuals on cool projects.
-            “Food is life and code is LOVE!”  - Sharon
             </p>
             <br></br>
             <h2>Paul Xu</h2>
@@ -45,13 +44,15 @@ const AboutPage = () => {
             <br></br>
             <h2>Quang Chieu Nguyen</h2>
             <p>Currently working with the non-profit VWAT Family Services. Quang while passionate about helping others is seeking out new challeges in web developoment
-            after gradution. Quang a father of two (three if you count his dog flower) believes mindfulness in the workplace is key to success,
+            after gradution. Quang a father of two, three if you count his dog Flower believes mindfulness in the workplace is key to success,
             so he lives out through his interests in gardening, painting, and photography.</p>
             <br></br>
             <h2>Holland Gronau</h2>
             <p>I believe in using apps and good old-fashioned math to makes people's lives easier and support good causes. 
             From start to finish, Walk or Wait was developed with the philosphy that good technology should be used to solve 
             real-life problems. </p>
+            <br></br>
+            <br></br>
       </MDBContainer>
     );
   }
