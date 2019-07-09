@@ -19,10 +19,9 @@ class Main extends React.Component {
       arrival: {},
       receivedResult: false,
       travelMode: null,
-      error: null
+      error: null,
     };
   }
-
 
   geolocate = (e) => {
     e.preventDefault()

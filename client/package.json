@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://localhost:3001/",
   "dependencies": {
+    "base-64": "^0.1.0",
     "mdbreact": "^4.16.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

@@ -7,6 +7,8 @@ import Main from './pages/Main'
 import Admin from './pages/Admin'
 import AboutPage from './pages/About'
 import Err from './pages/404'
+import Signin from './pages/Signin'
+import Signup from './pages/Signup'
 
 function App() {
   return (
@@ -15,8 +17,10 @@ function App() {
         <Nav />
           <Switch>
             <Route exact path="/" component={Main}/>
-            <Route exact path="/admin" component={Admin}/> 
-            <Route exact path="/about" component={AboutPage}></Route>      
+            <Route exact path="/admin/:email" component={Admin}/> 
+            <Route exact path="/about" component={AboutPage}/> 
+            <Route exact path="/signin" component={Signin}/>
+            <Route exact path="/signup" component={Signup}/>     
             <Route component={Err} />       
           </Switch>
         <Footer />
