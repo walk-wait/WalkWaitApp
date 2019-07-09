@@ -83,6 +83,51 @@ module.exports = {
                                     // find value y (the value one index before x) and check if in array 1 and return index
                                     // insert value at index + 1
                                     // until no more arrays to compare
+
+                                    // if (link.data.directions.length <= 2) {
+                                    //     // render all directions
+                                    //     link.data.directions.forEach(dir => {
+                                    //         let direction = dir.title.charAt(0)
+                                    //         let directionalStops = dir.stops.map(el => {
+                                    //             let info = stops.filter(x => x.tag === el)[0]
+                                    //             info.direction = direction
+                                    //             info.RouteId = routeRes[0].id
+                                    //             return info
+                                    //         })
+                                    //         directionalStops.forEach(stop => {
+                                    //             db.Stop.findOrCreate({
+                                    //                 where: stop
+                                    //             })
+                                    //         });
+                                    //     });
+                                    // } else {
+                                    //     let directionArr = link.data.map(el => el.directions)
+                                    //     let secondDirectionIndex = ""
+                                    //     switch (directionArr[0]) {
+                                    //         case "West":
+                                    //             secondDirectionIndex = directionArr.indexOf("East")
+                                    //             break;
+                                    //         case "East":
+                                    //             secondDirectionIndex = directionArr.indexOf("West")
+                                    //             break;
+                                    //         case "North":
+                                    //             secondDirectionIndex = directionArr.indexOf("South")
+                                    //             break;
+                                    //         case "South":
+                                    //             secondDirectionIndex = directionArr.indexOf("North")
+                                    //             break;
+                                    //         default:
+                                    //             break;
+                                    //     }
+
+                                        
+
+
+                                    // }
+
+
+
+
                                 })
                         })
                 })

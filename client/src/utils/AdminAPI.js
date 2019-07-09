@@ -5,4 +5,5 @@ export default {
   addAllRoutes: () => {
     return axios.get(`/admin/busDb/routes`);
   },
+
 };

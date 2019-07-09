@@ -19,10 +19,11 @@ class Main extends React.Component {
       arrival: {},
       receivedResult: false,
       travelMode: null,
-      error: null
+      error: null,
+      nextBus: null,
+      walkTime: null,
     };
   }
-
 
   geolocate = (e) => {
     e.preventDefault()
@@ -126,7 +127,9 @@ class Main extends React.Component {
       .then(res => {
         this.setState({ 
           receivedResult: true,
-          travelMode: res.data.travelMode
+          travelMode: res.data.travelMode,
+          nextBus: res.data.bus.nextBus,
+          walkTime: res.data.walk
          })
         console.log(res.data)
       })
@@ -146,7 +149,7 @@ class Main extends React.Component {
         <MDBContainer className="text-center mt-5 pt-5 mainContainer">
             <MDBRow className="justify-content-center">
                 <MDBCol md="5" sm="12">
-                  <MDBBtn href="/" color="yellow accent-3">TTC is unable provide bus info at this time.<br />Click here to try again.</MDBBtn>
+                  <MDBBtn href="/" color="yellow accent-3" className="black-text">TTC is unable provide bus info at this time.<br />Click here to try again.</MDBBtn>
                 </MDBCol>
             </MDBRow>
         </MDBContainer>
@@ -161,9 +164,12 @@ class Main extends React.Component {
             result={this.state.receivedResult}
             travelMode={this.state.travelMode}
             onClick={this.handleClickForDisplay}
+            nextBus={this.state.nextBus}
+            walkTime={this.state.walkTime}
           />) : 
           (<form style={{maxWidth: "400px"}} className="mx-auto">
             <MDBRow className="row justify-content-center">
+                <p className="white-text mb-3">Please press the "target icon" to find your current location. Then select your bus form the "Start..." dropdown menu.</p>
                 <MDBCol sm="12" className="mb-4">
                     <Start departOptions={this.state.departOptions} geolocate={this.geolocate} latitude={this.state.latitude} longitude={this.state.longitude} handleChange={this.handleDepartInput}/>
                 </MDBCol>
@@ -171,7 +177,7 @@ class Main extends React.Component {
                     <End arrivalOptions={this.state.arrivalOptions} route={this.state.depart.route} handleChange={this.handleDestinationInput}/> 
                 </MDBCol>
                 <MDBCol className="p-0 mx-auto">
-                  <MDBBtn color="yellow accent-3" size="sm" onClick={(e) => this.handleSubmit(e)}>Submit</MDBBtn>
+                  <MDBBtn color="yellow accent-3" className="black-text" size="lg" onClick={(e) => this.handleSubmit(e)}>Submit</MDBBtn>
                 </MDBCol>
             </MDBRow>
           </form>)

@@ -1,23 +1,25 @@
 const express = require("express");
+const Cors = require("cors")
 const routes = require("./routes");
 const app = express();
 const bodyParser = require("body-parser");
+const logger = require("morgan")
 const passport = require("passport");
-const session = require("express-session");
-const cookieParser = require('cookie-parser');
-let MemoryStore = require('session-memory-store')(session);
+
 const db = require("./models" );
-const binomialProbability = require("binomial-probability");
+
 
 const PORT = process.env.PORT || 3001;
 
-// for body parser 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+require('./config/passport/passport');
 
 // Define middleware here
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(Cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(logger('dev'));
+app.use(passport.initialize())
+
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
@@ -44,3 +46,5 @@ db.sequelize.sync(syncOptions).then(function () {
     );
   });
 });
+
+module.exports = app;

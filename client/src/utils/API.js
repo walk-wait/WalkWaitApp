@@ -10,5 +10,5 @@ export default {
   },
   search: (route, originStopId, destinationStopId, terminal, previous) => {
     return axios.get(`/api/app/search/${route}/${originStopId}/${destinationStopId}/${terminal}/${previous}`)
-  }
+  },
 };

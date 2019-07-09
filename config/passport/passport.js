@@ -1,51 +1,116 @@
-// import passport for user authentication
-var passport = require("passport");
-var localStrategy = require("passport-local").Strategy;
+const jwtSecret = require('./jwtConfig');
+const bcrypt = require('bcryptjs');
 
-// need model to check passport again
-var db = require("../../models");
+const BCRYPT_SALT_ROUNDS = 12;
 
-passport.use(new LocalStrategy(
-    // sign in with email, rather than a "username" 
-    // (will discuss with group mate)
+const passport = require('passport')
+const LocalStrategy = require('passport-local').Strategy
+const db = require('../../models')
+const JWTstrategy = require('passport-jwt').Strategy
+const ExtractJWT = require('passport-jwt').ExtractJwt
+
+passport.use(
+  'register',
+  new LocalStrategy(
     {
-      usernameField: "email"
+      usernameField: 'email',
+      passwordField: 'password',
+      session: false
     },
-    function(email, password, done) {
-      // When a user tries to sign in this code runs
+    (email, password, done) => {
+      try{
+        db.User.findOne({
+          where: {
+            email: email
+          }
+        }).then(user => {
+          if (user !== null) {
+            console.log('You have already registered with this Email.')
+            return done(null, false, {message: 'Already registered using this email.'})
+          } else {
+            console.log(`passport user 1 ${user}`)
+            bcrypt.hash(password, BCRYPT_SALT_ROUNDS)
+            .then(hashedPassword => {
+              db.User.create({
+                email: email,
+                password: hashedPassword
+              })
+              .then(user => {
+                console.log('user created')
+                return done(null, user)
+              })
+            })
+          }
+        })
+      } catch (err){
+        done(err)
+      }
+    }
+  )
+)
+
+passport.use(
+  'login',
+  new LocalStrategy(
+    {
+      usernameField: 'email',
+      passwordField: 'password',
+      session: false,
+    },
+    (email, password, done) => {
+      try {
+        db.User.findOne({
+          where: {
+            email: email
+          }
+        }).then(user => {
+          if (user === null) {
+            return done(null, false, {message: 'Email not found.'})
+          } else {
+            bcrypt.compare(password, user.password)
+            .then(response => {
+              if (!response){
+                console.log('Password does not mat our records.')
+                return done(null, false, {message: 'Password does not match our records.'})
+              }
+              console.log('User found & authenticated.')
+              return done(null, user)
+            })
+          }
+        })
+      } catch (err) {
+        done(err)
+      }
+    }
+  )
+)
+
+const opts = {
+  jwtFromRequest: ExtractJWT.fromAuthHeaderWithScheme('JWT'),
+  secretOrKey: jwtSecret.secret
+}
+
+passport.use(
+  'jwt',
+  new JWTstrategy(opts, (jwt_payload, done) => {
+    console.log('this is passport jwt')
+    console.log(jwt_payload)
+    try {
       db.User.findOne({
         where: {
-          email: email
+          email: jwt_payload.email
         }
-      }).then(function(dbUser) {
-        // If there's no user with the given email
-        if (!dbUser) {
-          return done(null, false, {
-            message: "Incorrect email."
-          });
+      }).then(user => {
+        if (user){
+          console.log('User found in db in passport.')
+          done(null, user)
+        } else {
+          console.log("User not found in db.")
+          done(null, false)
         }
-        // If there is a user with the given email, but the password the user gives us is incorrect
-        else if (!dbUser.validPassword(password)) {
-          return done(null, false, {
-            message: "Incorrect password."
-          });
-        }
-        // If none of the above, return the user
-        return done(null, dbUser);
-      });
+      })
+    } catch (err) {
+      done(err)
     }
-  ));
-  //
-  // In order to help keep authentication state across HTTP requests,
-  // Sequelize needs to serialize + deserialize the users
-  passport.serializeUser(function(user, cb) {
-    cb(null, user);
-  });
-  //
-  passport.deserializeUser(function(obj, cb) {
-    cb(null, obj);
-  });
-  //
-  // Exporting our configured passport
-  module.exports = passport;
-  
+  })
+)
