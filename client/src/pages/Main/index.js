@@ -135,6 +135,7 @@ class Main extends React.Component {
       })
       .catch(error => {
         console.log(error)
+        //commenting
         debugger;
         this.setState({error})
       })
