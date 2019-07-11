@@ -16,7 +16,7 @@ module.exports = {
     let direction = req.params.direction
     let stopId = req.params.id
 
-    db.Stop.findAll({
+    db.stop.findAll({
         // include: [db.Route],
         where: {
           "$Route.route$": route,
@@ -245,7 +245,7 @@ const busTime = async (route, origin, destination, terminal, previous, res) => {
 const findLatlon = async (stopId) => {
   let dbResult
   try {
-    dbResult = await db.Stop.findOne({
+    dbResult = await db.stop.findOne({
       where: {
         tag: stopId
       }
@@ -313,8 +313,7 @@ const getTravelMode = (a, b, c, d) => {
     travelMode = 'walk'
   }
 
-  return travelMode // is a string
-
+  return travelMode //as sting
 }
 
 // s variable coefficiant used by binomial for rush hour

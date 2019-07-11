@@ -45,7 +45,7 @@ module.exports = {
                                     return info
                                 })
                                 directionalStops.forEach(stop => {
-                                    db.Stop.findOrCreate({
+                                    db.stop.findOrCreate({
                                         where: stop
                                     })
                                 });
