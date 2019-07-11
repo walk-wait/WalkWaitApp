@@ -9,7 +9,8 @@ router.use("/admin", adminRoutes);
 
 // If no API routes are hit, send the React app
 router.use(function(req, res) {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
+  res.sendFile(path.join(__dirname, "../client/build/index.html")); //Local routes
+  // res.sendFile(path.join(__dirname, "client","build", "index.html")); virtual machine code
 });
 
 module.exports = router;

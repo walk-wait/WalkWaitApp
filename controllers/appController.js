@@ -313,8 +313,7 @@ const getTravelMode = (a, b, c, d) => {
     travelMode = 'walk'
   }
 
-  return travelMode // is a string
-
+  return travelMode //as sting
 }
 
 // s variable coefficiant used by binomial for rush hour
