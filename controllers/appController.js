@@ -154,7 +154,7 @@ const busTime = async (route, origin, destination, terminal, previous, res) => {
         let lastBusTime = Math.round(busTimes.data[0].values[busTimes.data[0].values.length - 1].minutes)
 
         let secondLastBusTime
-        if (busTimes.data[1].values.length >= 2) {
+        if (busTimes.data[0].values.length >= 2) {
           console.log("busTimes.data[1].values.length >= 2")
           // If there are two or more bus arriving at destination
           secondLastBusTime = Math.round(busTimes.data[0].values[busTimes.data[1].values.length - 2].minutes)
