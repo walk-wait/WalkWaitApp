@@ -25,7 +25,7 @@ class Result extends React.Component {
       console.log (text)
 
     return(
-       <div><button className={heading} onClick={(e)=>{this.props.onClick(e)}}><h2>{heading}</h2><br></br><p>{text}</p></button></div>
+       <div><button className={heading} onClick={(e)=>{this.props.onClick(e)}}><h2>{heading}</h2><br></br><p>{text}</p><br/>Click here to return to search.</button></div>
     );
   }
 }
