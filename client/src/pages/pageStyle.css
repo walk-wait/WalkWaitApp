@@ -11,10 +11,10 @@
     margin: 0px;
     color: white;
     /* height: 90%; */
-    min-height: calc(100vh - 147px);
+    min-height: calc(100vh - 195px);
     width: 100%;
-    left: 0;
-    top: 6%;
+    /* left: 0; */
+    /* top: 6%; */
     /* z-index: 1100; */
 }
 
@@ -27,12 +27,12 @@
     color: white;
     font-size: x-large;
     /* height: 90%; */
-    min-height: calc(100vh - 147px);
+    min-height: calc(100vh - 195px);
     width: 100%;
     /* width: 400px;
     height: 400px; */
-    left: 0;
-    top: 6%;
+    /* left: 0;
+    top: 6%; */
     /* z-index: 1100; */
 }
 
@@ -44,11 +44,11 @@
     margin: 0px;
     color: #212121;
     /* height: 90%; */
-    min-height: calc(100vh - 147px);
+    min-height: calc(100vh - 195px);
     width: 100%;
-    left: 0;
+    /* left: 0;
     top: 6%;
-    z-index: 1100;
+    z-index: 1100; */
 }
 
 #about {
