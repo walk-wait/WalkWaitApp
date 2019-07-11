@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
     
-    var Stop = sequelize.define("Stop", {
+    var Stop = sequelize.define("stop", {
         tag: {
             type: DataTypes.STRING,
             allowNull: false
