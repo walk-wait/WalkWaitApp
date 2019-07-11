@@ -12,7 +12,7 @@ module.exports = function (sequelize, DataTypes) {
     })
 
     Route.associate = function(models) {
-        Route.hasMany(models.Stop);
+        Route.hasMany(models.stop);
     };
 
     return Route
