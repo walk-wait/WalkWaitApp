@@ -122,6 +122,8 @@ class Admin extends React.Component {
           console.log(response.data)
           alert(response.data.message)
           this.setState({
+            email: '',
+            password: '',
             messageFromServer: response.data.message,
             showError: false,
             loginError: false,
